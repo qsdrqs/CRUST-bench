@@ -1,0 +1,16 @@
+Reminder:
+# Formatting Guide
+Enclose your final solution for each transpiled file in the following format:
+
+{{file name.rs}} 
+```rust
+// Generated Rust Code
+```
+
+# Rules to follow for Rust output:
+1. You must follow the definitions of the Rust Interface file.
+2. You always outline each step of the transpilation process by reasoning about the input C code and output Rust code. Further, take into account the safety features provided by the Rust programming language and use the safety features in Rust.
+3. Always strictly follow the format when producing the output.
+4. Ensure the code does not use Foreign Function Interface (FFI) calls (like libc).
+5. Always produce safe Rust and do not use any unsafe code.
+6. Ensure that you transpile each file with extreme care and do not skip any steps otherwise you will be severely punished.

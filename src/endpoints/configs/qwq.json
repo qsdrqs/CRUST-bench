@@ -1,0 +1,7 @@
+{
+    "model": "Qwen/QwQ-32B-Preview",
+    "max_tokens": 32768,
+    "parallel": "False",
+    "gpus": 4
+
+}

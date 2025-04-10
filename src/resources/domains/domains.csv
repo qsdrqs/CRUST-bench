@@ -1,0 +1,101 @@
+Domain,Category
+proj_2DPartInt,other
+proj_42_Kocaeli_Printf,system util
+aes128_SIMD,crypto
+amp,networking
+approxidate,system util
+avalanche,algo 
+bhshell,system util
+bigint,data structure
+bitset,data structure
+blt,data structure
+bostree,data structure
+btree_map,data structure
+c_aces,crypto
+c_blind_rsa_signatures,crypto
+c_string,data structure
+carrays,data structure
+cfsm,algo
+chtrie,data structure
+CircularBuffer,system util
+cissy,other
+cJSON,other
+clhash,crypto
+clog,system util
+coroutine,system util
+cset.h,data structure
+csyncmers,algo
+dict,data structure
+emlang,pl infra
+expr,pl infra
+fft,algo
+file2str,system util
+fleur,data structure
+fs.c,system util
+fslib,algo
+gorilla_paper_encode,algo
+Graph_recogniser, softappware
+hamta,data structure
+Holdem_Odds,app software
+hydra,system util
+impcheck,pl infra
+inversion_list,data structure
+jccc,pl infra
+kairoCompiler,pl infra
+kd3,data structure
+lambda_calculus_eval,pl infra
+leftpad,system util
+lib2bit,system util
+libbeaufort,crypto
+libfor,algo
+libm17,networking
+libpgn,system util
+libpsbt,crypto
+libqueue,data structure
+libtinyfseq,system util
+libutf,system util
+libvcd,system util
+libwecan,networking
+Linear_Algebra_C,algo
+ljmm,system util
+LTRE,pl infra
+Math_Library_in_C,system util
+matrix_multiplication,algo
+Megalania,algo
+merkle_tree_c,data structure
+morton,algo
+murmurhash_c,crypto
+mvptree,data structure
+NandC,algo
+Phills_DHT,data structure
+quadtree,data structure
+razz_simulation,algo
+rbtree_lab,data structure
+recordManager,other
+Remimu,pl infra
+replit_rtld_loader,system util
+rhbloom,algo
+roaring_bitmap,algo
+rubiksolver,other
+satc,algo
+Simple_Config,system util
+Simple_Sparsehash,crypto
+simple_lang,pl infra
+skp,system util
+SlothLang,pl infra
+ted,system util
+tisp,pl infra
+totp,crypto
+ulidgen,algo
+utf8,system util
+VaultSync,system util
+vec,data structure
+worsp,pl infra
+rect_pack_h,algo
+geofence,algo
+gfc,crypto
+FastHamming,crypto
+mdb,pl infra
+libbase122,app software
+SimpleXML,pl infra
+XOpt,pl infra

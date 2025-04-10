@@ -1,0 +1,7 @@
+{
+    "model": "Qwen/Qwen2.5-Coder-32B",
+    "max_tokens": 8192,
+    "parallel": "False",
+    "gpus": 4
+
+}

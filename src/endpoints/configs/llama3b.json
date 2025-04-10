@@ -1,0 +1,7 @@
+{
+    "model":"meta-llama/Meta-Llama-3-8B",
+    "max_tokens":8192,
+    "gpus":2,
+    "temperature":0.0,
+    "top_p":1.0
+}

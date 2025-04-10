@@ -1,0 +1,93 @@
+proj_name	Short Description	category
+2DPartInt	Physics simulator for partitioning objects	other
+42-Kocaeli-Printf	print implementation	system util
+aes128-SIMD	encryption	crypto
+amp	network protocol	networking
+approxidate	date formatting	system util
+avalanche	hash computation	algo 
+bhshell	shell implementation	system util
+bigint	large integer implementation	data structure
+bitset	bit operations 	data structure
+blt	crit bit tree for efficient string retrieval	data structure
+bostree	self balancing avl tree implementation	data structure
+btree-map	btree map implementation	data structure
+c-aces	encryption	crypto
+c-blind-rsa-signatures	encryption	crypto
+c-string	string implementation	data structure
+carrays	array implementation	data structure
+cfsm	finite state machine implementation	algo
+chtrie	coordinate hash trie implementation	data structure
+CircularBuffer	buffer implementation	system util
+cissy	csv reader	other
+cJSON	json parser	other
+clhash	CL Hashing algo	crypto
+clog	logger	system util
+coroutine	coroutine 	system util
+cset.h	set implementation	data structure
+csyncmers	closed syncmers	algo
+dict	dict implementation	data structure
+emlang	programming language	pl infra
+expr	expression evaluator	pl infra
+fft	fast fourier transform	algo
+file2str	convert file to string 	system util
+fleur	bloom filter	data structure
+fs.c	file system	system util
+fslib	finite state transducer	algo
+gorilla-paper-encode	encoder	algo
+Graph-recogniser	graph recogniser	app software
+hamta	hash array mapped trie	data structure
+Holdem-Odds	poker odds computation	app software
+hydra	emacs functionality	system util
+impcheck	proof checker	pl infra
+inversion_list	inversion list data structure	data structure
+jccc	c compiler and preprocessor	pl infra
+kairoCompiler	compiler	pl infra
+kd3	balanced 3d k-d tree	data structure
+lambda-calculus-eval	lambda calc language	pl infra
+leftpad	string padding functionality	system util
+lib2bit	2 bit file processing functionality	system util
+libbeaufort	beaufort cipher	crypto
+libfor	frame of reference integer compression	algo
+libm17	network protocol	networking
+libpgn	chess move reader	system util
+libpsbt	partially signed bitcoin transactions	crypto
+libqueue	queue implementatino	data structure
+libtinyfseq	decoding fseq files	system util
+libutf	unicode processing library	system util
+libvcd	vcd reading library	system util
+libwecan	network protocol	networking
+Linear-Algebra-C	linear algebra project	algo
+ljmm	increases luaJIT memory limit on linux	system util
+LTRE	finite automaton regex engine	pl infra
+Math-Library-in-C	custom math library implementations	system util
+matrix_multiplication	efficient matrix multiplication	algo
+Megalania	lzma compressor	algo
+merkle-tree-c	merkle tree implementation	data structure
+morton	bit interleaving operations	algo
+murmurhash.c	hash computation	crypto
+mvptree	MVP tree implementation	data structure
+NandC	Nand implementation	algo
+Phills_DHT	Hash tree implementatino	data structure
+quadtree	quad tree implementation	data structure
+razz_simulation	card counter 	algo
+rbtree-lab	red black tree implementation	data structure
+recordManager	record managing software	other
+Remimu	regex library	pl infra
+replit_rtld_loader	dynamic library loader	system util
+rhbloom	bloom filter using robinhood hashing	algo
+roaring-bitmap	roaring bitmap paper implementation	algo
+rubiksolver	rubik's cube solver	other
+satc	sat solver	algo
+Simple-Config	config file parser	system util
+Simple-Sparsehash	sparse hashing algo	crypto
+simple_lang	programming language	pl infra
+skp	text file parser	system util
+SlothLang	programming language	pl infra
+ted	text editor	system util
+tisp	lisp programming lang	pl infra
+totp	otp generator	cryto
+ulidgen	universally unique lexicographically sortable identifier generator	algo
+utf8	utf-8 parser	system util
+VaultSync	version tracking	system util
+vec	vector implementation	data structure
+worsp	lisp implementation	pl infra

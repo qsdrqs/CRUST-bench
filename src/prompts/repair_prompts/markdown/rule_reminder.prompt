@@ -1,0 +1,16 @@
+# Reminder
+## Formatting Guide
+Enclose your final solution for each transpiled file in the following format:
+
+{{file name.rs}} 
+```rust
+// Generated Rust Code
+```
+
+# Rules to follow when repairing Rust code:
+1. Ensure that you do not change the function signatures during the repair.
+2. You first reason about each error and why the error is caused. 
+3. Ensure the code does not use Foreign Function Interface (FFI) calls (like libc). 
+4. You then repair it abiding by the rust safety features. 
+5. Ensure that you always give the complete code and not just the changes otherwise you will be severely punished. 
+6. You produce the complete code with the proposed changes. 
