@@ -7,9 +7,6 @@ import shutil
 def compile_rust_test_proj(proj_name):
     env = os.environ.copy()
     env["RUST_FLAGS"] = "-Awarnings"
-    # r = subprocess.run(
-    #     ["cargo", "clean"], cwd=proj_name, capture_output=True, text=True, env=env
-    # )
     try:
         result = subprocess.run(
             ["cargo", "build"], cwd=proj_name, capture_output=True, text=True, timeout=60
@@ -79,6 +76,6 @@ def clean_rust_projects():
     print('done')
 
 if __name__ == "__main__":    
-    # format_rust_proj()
+    format_rust_proj()
     compile_rust_projs()
     clean_rust_projects()

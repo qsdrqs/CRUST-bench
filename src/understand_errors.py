@@ -63,12 +63,11 @@ def process_proj(res_dir):
     for error_msg in error_msg_cnt:
         found = False
         for cat in [
-            {'borrow': ['borrowed', 'borrow', 'moved']},
+            {'borrow': ['borrowed', 'borrow', 'moved', 'lifetime', 'lifetimes', "reference to a local variable"]},
             {'mutable_immutable': ['mutable', 'immutable']},
             {'unresolved import': ['import unresolved', "unresolved import", "unresolved imports"]},
             {'missing': ['missing', 'not found', 'cannot find', 'undeclared', 'Unresolved', 'non-existent', 'import']},
             {'trait': ['trait']},
-            {'lifetime': ['lifetime', 'lifetimes', "reference to a local variable"]},
             {'type': ['cast', 'sized types', 'bindings', 'type', 'identifier', 'expression', "dereference"]},
             {'args': ['args', 'argument', 'arguments', 'Something other than numbers and characters has been used for a range.']},
             ]:

@@ -18,8 +18,6 @@ def endpoint_resolver(config, endpoint):
             config = json.loads((CONFIG_PATH / "o1.json").read_text())
         elif endpoint == "o1-mini":
             config = json.loads((CONFIG_PATH / "o1_mini.json").read_text())
-        elif endpoint == "qwq":
-            config = None
         elif endpoint == "gemini":
             config = json.loads((CONFIG_PATH / "gemini.json").read_text())
         else:

@@ -2,6 +2,7 @@
     "model": "Qwen/Qwen2.5-Coder-32B",
     "max_tokens": 8192,
     "parallel": "False",
-    "gpus": 4
-
+    "gpus": 4,
+    "temperature": 0.0,
+    "top_p": 1
 }

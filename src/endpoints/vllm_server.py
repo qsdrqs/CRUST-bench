@@ -7,7 +7,7 @@
 # It also uses the xml.etree.ElementTree library for parsing XML output from nvidia-smi.
 # It is important to ensure that the necessary libraries are installed and that the SSH keys are properly configured for passwordless access to the remote machines.
 # The script is structured to allow for easy modification and extension, such as adding more machines or changing the model configuration.
-
+# Thanks to Zayne Sprague for the original code/
 
 # vllm_server.py
 

@@ -56,15 +56,17 @@ def load_benchmarks(r_path: Path):
     return benchmarks
 
 def main():
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument('--input_path', type=str, required=True)
-    argparser.add_argument('--output_path', type=str, required=True)
-    argparser.add_argument('--endpoint', type=str, required=True)
-    argparser.add_argument('--config', type=str, required=False, default=None)
+    argparser = argparse.ArgumentParser(help='The given script repairs the projects based on the test cases.')
+    argparser.add_argument('--input_path', type=str, required=True, help='Path to the input Rust project directory.')
+    argparser.add_argument('--output_path', type=str, required=True, help='Path to the output directory for projects that have been repaired with test case feedback.')
+    argparser.add_argument('--endpoint', type=str, required=True, help='Endpoint for the repairer.')
+    argparser.add_argument('--config', type=str, required=False, default=None, help='Path to the config file (incase endpoint is deployed using vllm) for the repairer.')
+    argparser.add_argument('--iterations', type=int, required=True, help='Number of iterations for the repair process.')
     args = argparser.parse_args()
     r_path = Path(args.input_path)
     output_dir = Path(args.output_path)
     config = args.config
+    iterations = args.iterations
     if not output_dir.exists():
         output_dir.mkdir(parents=True, exist_ok=True)
     endpoint = args.endpoint
@@ -78,7 +80,7 @@ def main():
     if config != None:
         config = Path(config)
     config = endpoint_resolver(config, endpoint)
-    iterations = 3
+    
     benchmarks = load_benchmarks(output_dir)
     if Path(output_dir / 'CBench').exists():
         shutil.rmtree(output_dir / 'CBench')

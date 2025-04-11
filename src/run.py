@@ -4,23 +4,19 @@ import sys
 import csv
 from pathlib import Path
 import argparse
-import cProfile
 from benchmark import load_benchmarks
 from prompter import (
     Prompter,
     RepairPrompter,
 )
-import subprocess
-from prompters.test_repair import BulletPointTestRepairPrompterWithSystemInstructions
 from transpiler import Transpiler, TranspilerN
 from test_repairer import TestRepairer
-from utils.rust_project_builder import write_rust_files, write_rust_interfaces, write_rust_multi_files, create_top_level_cargo_toml
+from utils.rust_project_builder import write_rust_files, write_rust_multi_files, create_top_level_cargo_toml
 from utils.compile_rust_utils import (
     final_error_report,
     get_errors_for_iteration,
     final_test_report,
     aggregate_results,
-    compile_rust_test_proj,
     performance_stats
 )
 import shutil
@@ -28,6 +24,10 @@ from endpoint_config import endpoint_resolver
 from compile_projects import compile, test
 from repairer import Repairer
 from utils.parse_c import order_dependencies
+from understand_errors import (
+    get_numbers,
+    process_proj
+)
 
 
 class Runner:
@@ -90,6 +90,21 @@ class Runner:
             self.benchmarks = [
                 b for b in self.benchmarks if b.project_name == single_benchmark
             ]
+        # dump a config log
+        print(f'''
+        Number of benchmarks: {len(self.benchmarks)}
+        Prompt: {self.prompt}
+        Prompt format: {self.prompt_format}
+        Prompt strategy: {self.prompt_strategy}
+        Repairer prompt: {self.repairer_prompt}
+        Repairer format: {self.repairer_format}
+        Repairer strategy: {self.repairer_strategy}
+        Iterations: {self.iterations}
+        Endpoint: {self.endpoint}
+        Include interfaces: {self.include_headers}
+        Config: {self.config}
+        Rust path: {self.rust_dir}
+        ''')
  
 
     def transpile(self):
@@ -178,39 +193,47 @@ class Runner:
 
                 csv_writer.writerow([benchmark.project_name, c_loc, rust_loc, builds])
 
-    def test_perf(self, mode="test_normal"):
-        if mode == "test_normal":
-            self.transpile()
+    def test_perf(self):
+        self.transpile()
         self.repair()
         self.get_loc()
-        final_error_report(self.output_dir)
-        final_test_report(self.output_dir)
+        # errors per iteration of repair
         get_errors_for_iteration(self.output_dir)
+        # errors after all iterations have been run
+        final_error_report(self.output_dir)
+        # test based errors after all iterations have been run
+        final_test_report(self.output_dir)
+        # performance stats per project
         performance_stats(self.output_dir)
+        # categorize errors based on error type
+        process_proj(self.output_dir)
+        # get the final numbers
+        get_numbers(self.output_dir)
+
+
 
     
 
 if __name__ == "__main__":
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument("--benchmark_dir", type=str, required=True)
-    argparser.add_argument("--rust_dir", type=str, required=False, default=None)
-    argparser.add_argument("--output_dir", type=str, required=True)
-    argparser.add_argument("--prompt", type=str, required=True)
-    argparser.add_argument("--mode", type=str, default="normal")
-    argparser.add_argument("--endpoint", type=str, required=True)
-    argparser.add_argument("--prompt_format", type=str, required=True)
-    argparser.add_argument("--prompt_strategy", type=str, required=True)
-    argparser.add_argument("--repairer_prompt", type=str, required=True)
-    argparser.add_argument("--repairer_format", type=str, required=True)
-    argparser.add_argument("--repairer_strategy", type=str, required=True)
-    argparser.add_argument("--iterations", type=str, required=True)
-    argparser.add_argument("--include_headers", type=bool, default=True)
-    argparser.add_argument("--single_benchmark", type=str, default=None)
-    argparser.add_argument("--config", type=str, required=False, default=None)
-    argparser.add_argument("--n", type=int, default=1)
+    argparser = argparse.ArgumentParser(help="Evaluate your model with CRUST-bench")
+    argparser.add_argument("--benchmark_dir", type=str, required=True, help="Path to the C project (CBench) directory")
+    argparser.add_argument("--rust_dir", type=str, required=False, help="Path to the Rust project (RBench) directory")
+    argparser.add_argument("--output_dir", type=str, required=True, help="Path to the output directory")
+    argparser.add_argument("--prompt", type=str, required=True, help="Prompt to use for the model")
+    argparser.add_argument("--mode", type=str, default="normal", help="The mode(normal, multi_gen), that does the transpilation")
+    argparser.add_argument("--endpoint", type=str, required=True, help="Endpoint to use for the model. Look at the `endpoints/call_endpoint.py` for more information.")
+    argparser.add_argument("--prompt_format", type=str, required=True, help="Format of the prompt (markdown, bullet_point)")
+    argparser.add_argument("--prompt_strategy", type=str, required=False, default="all", help="Strategy to use for the prompt (all- all files are appended to the prompt)")
+    argparser.add_argument("--repairer_prompt", type=str, required=True, help="Prompt to use for the repairer")
+    argparser.add_argument("--repairer_format", type=str, required=True, help="Format of the repairer prompt(markdown, bullet_point)")
+    argparser.add_argument("--repairer_strategy", type=str, required=True, help="Strategy to use for the repairer prompt(all- all files are appended to the prompt)")
+    argparser.add_argument("--iterations", type=str, required=True, help="Number of iterations to run the repairer")
+    argparser.add_argument("--include_headers", type=bool, default=True, help="Whether to include headers in the prompt")
+    argparser.add_argument("--single_benchmark", type=str, default=None, help="Set this flag when you only want to run a single benchmark to run")
+    argparser.add_argument("--config", type=str, required=False, default=None, help="Path to the endpoint config file")
+    argparser.add_argument("--n", type=int, default=1, help="Number of generations to receive from the model during transpilation")
     args = argparser.parse_args()
     config = endpoint_resolver(args.config, args.endpoint)
-
     def main():
         runner = Runner(
             benchmark_dir=args.benchmark_dir,
@@ -233,15 +256,11 @@ if __name__ == "__main__":
         if args.config:
             with open(args.config, "r") as f:
                 config = json.load(f)
-        if args.mode == "test_normal":
-            runner.test_perf(args.mode)
+        if args.mode == "normal":
+            runner.test_perf()
         elif args.mode == "multi_gen":
             print(f"Top-{args.n} generation, with temperature {config['temperature']}")
             runner.multi_gen()
         else:
             raise ValueError("Invalid mode")
 
-    # Profile the main function
-    profiler = cProfile.Profile()
-    profiler.run("main()")
-    profiler.dump_stats(args.output_dir + "/profile.prof")

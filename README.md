@@ -14,7 +14,7 @@ C-to-Rust transpilation is essential for modernizing legacy C code while enhanci
 
 ## Paper
 
-Our paper "[Paper Title]" is available at:
+Our paper "CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation" is available at:
 - [arXiv](https://arxiv.org/abs/XXXX.XXXXX)
 
 ## Dataset Description
@@ -76,37 +76,6 @@ RBench/
 
 ```
 
-### Statistics
-
-#### C Code Properties
-
-| **C Code Properties**     | **Avg** | **Max**  |
-|--------------------------|--------:|---------:|
-| Test cases               |   76.4  |     952  |
-| Test files               |    3.0  |      19  |
-| Test coverage            |   67%   |    100%  |
-| Lines of code            |    958  |  25,436  |
-| Pointer dereferences     |    264  |  12,664  |
-| Functions                |   34.6  |     418  |
-
----
-
-#### Interface Metrics
-
-| **Metric**                         | **Total** | **Avg** | **Max** |
-|----------------------------------|----------:|--------:|--------:|
-| *Interface Structure*            |           |         |         |
-| Interface files                  |       299 |     3.0 |     21  |
-| Interface functions              |     3,085 |    30.9 |    415  |
-| Function arguments               |     5,716 |    57.2 |  1,484  |
-
-| **Ownership and Type Features**                | **Percent** |
-|-----------------------------------------------|------------:|
-| % Functions with reference args               |        56%  |
-| % Custom types in arguments                   |        44%  |
-| % Custom types in return types                |        50%  |
-| % Functions with mutable references           |        30%  |
-
 ## Usage
 
 ### Requirements
@@ -116,8 +85,17 @@ List any dependencies required to use the dataset:
 pip install -r requirements.txt
 ```
 
-### Recreating experiments from the CRUST-bench paper
-Please set the relevant OpenAI, Antropic, Google AI API keys using the environment variables.
+### Loading the Dataset
+The dataset is within the `datasets` folder as a zip file that can be extracted to provide 2 folders:
+  1. __CBench__: the projects scraped from github.
+  2. __RBench__: the manually annotated interfaces and corresponding tests.
+
+To perform a sanity type check, we provide the `check_benchmarks/check_build.py` script that produces a compilable version of the rust project with the `unimplemented!()` function bodies that can be type checked.
+
+The `src/dataset_stats` aids in plotting metrics over the C repositories and the annotated Rust interfaces and tests.
+
+### Recreating experiments from CRUST-bench.
+Please set the relevant OpenAI, Antropic, Google CLOUD API keys using the environment variables.
 
 ```bash
 export OPENAI_API_KEY=<OpenAI_API_KEY>
@@ -126,19 +104,39 @@ export GOOGLE_CLOUD_PROJECT=<GOOGLE_CLOUD_PROJECT>
 export GOOGLE_CLOUD_REGION=<GOOGLE_CLOUD_REGION>
 ```
 
+Incase you want to test your own model, you need to define the respective model in the endpoints folder. We format all our requests in the `openai.chat.completions` API format. Ensure that you also update the `call_endpoint.py` file, and add the associated configuration of the model in the `configs` folder.
 
+We provide easy bash scripts located in the `scripts` folder that allow you to easily test your models with our pipeline. 
 
-### Loading the Dataset
-The `benchmark.py` file contains the function `load_benchmark()` function that takes in the `CBench` and `RustBench` folder paths and enables easy access of CRUST Bench.
-Please refer to the `benchmark.py` file for more details. 
+The entrypoint to our code is the `src/run.py` file that takes in the following params:
 
+| Argument | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `--benchmark_dir` | `str` | ✅ Yes | – | Path to the C project (**CBench**) directory. |
+| `--rust_dir` | `str` | ❌ No | `None` | Path to the Rust project (**RBench**) directory. |
+| `--output_dir` | `str` | ✅ Yes | – | Path to the output directory. |
+| `--prompt` | `str` | ✅ Yes | – | Prompt to use for the model during transpilation. |
+| `--mode` | `str` | ❌ No | `"normal"` | Transpilation mode. Options: `normal`, `multi_gen`. |
+| `--endpoint` | `str` | ✅ Yes | – | Endpoint to use for the model. See `endpoints/call_endpoint.py` for details. |
+| `--prompt_format` | `str` | ✅ Yes | – | Format of the prompt. Options: `markdown`, `bullet_point`. |
+| `--prompt_strategy` | `str` | ❌ No | `"all"` | Strategy for composing the prompt. Options: `all` (all files are appended). |
+| `--repairer_prompt` | `str` | ✅ Yes | – | Prompt used for the repairer model. |
+| `--repairer_format` | `str` | ✅ Yes | – | Format of the repairer prompt. Options: `markdown`, `bullet_point`. |
+| `--repairer_strategy` | `str` | ✅ Yes | – | Strategy for repairer prompt. Options: `all` (all files are appended). |
+| `--iterations` | `str` | ✅ Yes | – | Number of iterations to run the repairer. |
+| `--include_headers` | `bool` | ❌ No | `True` | Whether to include header files in the prompt. |
+| `--single_benchmark` | `str` | ❌ No | `None` | Run a single benchmark only (provide its name). |
+| `--config` | `str` | ❌ No | `None` | Path to the endpoint configuration file. |
+| `--n` | `int` | ❌ No | `1` | Number of generations to request from the model during transpilation. |
+
+The test based repair is only run for projects that build and test but do not pass all test cases. The associated bash script is provided in `scripts/test_based_repair/test_repair.sh`
 ## Citation
 
 If you use this dataset in your research, please cite our paper:
 
 ```bibtex
-@article{author2025dataset,
-  title={Dataset Paper Title},
+@article{CRUST-bench,
+  title=CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation,
   author={Last, First and Co-author, Second and et al.},
   journal={Journal/Conference Name},
   year={2025},
@@ -155,9 +153,9 @@ This dataset is released under [LICENSE NAME] license. See [LICENSE](LICENSE) fo
 ## Contact
 
 For questions, issues, or further information, please contact:
-- **Name**: [Your Name]
-- **Email**: [your.email@institution.edu]
-- **GitHub**: [@username](https://github.com/username)
+- **Name**: Anirudh Khatry
+- **Email**: [akhatry@utexas.edu]
+- **GitHub**: [@anirudhkhatry](https://github.com/anirudhkhatry)
 
 ## Acknowledgments
 

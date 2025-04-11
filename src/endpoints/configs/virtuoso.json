@@ -1,6 +1,6 @@
 {
     "model": "arcee-ai/Virtuoso-Medium-v2",
     "max_tokens": 8192,
-    "temperature": 0,
+    "temperature": 0.0,
     "gpus": 4
 }

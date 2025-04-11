@@ -1,0 +1,1 @@
+The following bash scripts compare the greedy self repair strategy used in the paper [Is Self-Repair a Silver Bullet for Code Generation?](https://arxiv.org/abs/2306.09896). In both cases we use a call budget of 6 calls to the respective LLM.

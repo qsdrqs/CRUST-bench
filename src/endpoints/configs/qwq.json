@@ -2,6 +2,7 @@
     "model": "Qwen/QwQ-32B-Preview",
     "max_tokens": 32768,
     "parallel": "False",
-    "gpus": 4
-
+    "gpus": 4,
+    "temperature": 0.0,
+    "top_p": 1
 }

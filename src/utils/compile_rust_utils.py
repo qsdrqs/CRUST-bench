@@ -322,6 +322,10 @@ def cargo_test(proj_path):
     return oks, fails
 
 def performance_stats(dir):
+    overall_stats = {
+        "All tests pass": 0,
+        "Compile":0
+    }
     lines = csv.reader(open(dir / 'test_report.csv', 'r'))
     proj_dict = {}
     lines = list(lines)
@@ -338,6 +342,13 @@ def performance_stats(dir):
             proj_dict[proj_name] = (-1, -1)
         else:
             proj_dict[proj_name] = (oks, fails)
+        
+        if fails == 0 and oks > 0:
+            overall_stats["All tests pass"] += 1
+        elif oks>=0 and fails>=0:
+            overall_stats["Compile"] += 1
+        else:
+            pass
     with open(Path(dir)/ 'test_report_p_f.csv', 'w') as f:
         writer = csv.writer(f)
         writer.writerows(lines)
@@ -350,7 +361,9 @@ def performance_stats(dir):
                 continue
             writer.writerow([line[0], proj_dict[line[0]][0], proj_dict[line[0]][1]])
             visited.add(line[0])
+    print(f"Overall stats: {json.dumps(overall_stats, indent=4)}")
     return proj_dict
+
 def aggregate_performance_stats(dir_paths: List[Path], output_folder: Path):
     proj_stats = {}
     for dir_path in dir_paths:
