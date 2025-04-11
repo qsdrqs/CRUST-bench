@@ -215,7 +215,7 @@ class Runner:
     
 
 if __name__ == "__main__":
-    argparser = argparse.ArgumentParser(help="Evaluate your model with CRUST-bench")
+    argparser = argparse.ArgumentParser(description="Evaluate your model with CRUST-bench")
     argparser.add_argument("--benchmark_dir", type=str, required=True, help="Path to the C project (CBench) directory")
     argparser.add_argument("--rust_dir", type=str, required=False, help="Path to the Rust project (RBench) directory")
     argparser.add_argument("--output_dir", type=str, required=True, help="Path to the output directory")

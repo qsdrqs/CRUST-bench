@@ -56,7 +56,7 @@ def load_benchmarks(r_path: Path):
     return benchmarks
 
 def main():
-    argparser = argparse.ArgumentParser(help='The given script repairs the projects based on the test cases.')
+    argparser = argparse.ArgumentParser(description='The given script repairs the projects based on the test cases.')
     argparser.add_argument('--input_path', type=str, required=True, help='Path to the input Rust project directory.')
     argparser.add_argument('--output_path', type=str, required=True, help='Path to the output directory for projects that have been repaired with test case feedback.')
     argparser.add_argument('--endpoint', type=str, required=True, help='Endpoint for the repairer.')
