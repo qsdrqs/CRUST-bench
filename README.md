@@ -142,7 +142,7 @@ The entrypoint to our code is the `src/run.py` file that takes in the following 
 | `--config` | `str` | ❌ No | `None` | Path to the endpoint configuration file. |
 | `--n` | `int` | ❌ No | `1` | Number of generations to request from the model during transpilation. |
 
-For instancd to run with OpenAI's o1 model you can run the following command:
+For instance to run with OpenAI's o1 model you can run the following command:
 
 ```bash
 python run.py \
@@ -176,8 +176,8 @@ python run.py \
     --repairer_format bullet_point_with_system_instructions \
     --repairer_strategy all \
     --iterations 3 \
-    --mode ./endpoints/configs/claude37.json \
-    --endpoint "claude37" \
+    --mode ./endpoints/configs/o1.json \
+    --endpoint "o1" \
     --rust_dir "../datasets/RBench"
 ```
 
@@ -187,7 +187,7 @@ Next, we need to run the test based repair. This can be done by running the foll
 python repair_tests.py \
     --input_path outputs/o1 \
     --output_path output/o1_test_guided_repair \
-    --endpoint claude37 \
+    --endpoint o1 \
     --iterations 3
 ```
 This will select the projects that compile but fail the tests and run the repairer on them. The repaired code will be saved in the `output/o1_test_guided_repair` directory.
