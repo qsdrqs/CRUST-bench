@@ -155,8 +155,8 @@ python run.py \
     --repairer_format bullet_point_with_system_instructions \
     --repairer_strategy all \
     --iterations 3 \
-    --mode ./endpoints/configs/claude37.json \
-    --endpoint "claude37" \
+    --mode ./endpoints/configs/o1.json \
+    --endpoint "o1" \
     --rust_dir "../datasets/RBench"
 ```
 
@@ -164,24 +164,8 @@ For running more scripts, please refer to the `scripts` folder.
 
 In order to perform the test based repair:
 
-First we need to run the default transpile-then-repair pipeline. This can be done by running the following command:
-```bash
-python run.py \
-    --benchmark_dir "../datasets/CBench" \
-    --output_dir "outputs/o1" \
-    --prompt ./prompts/transpilation_prompts/bullet_point/bullet_point_interface.prompt \
-    --prompt_format bullet_point_with_system_instructions \
-    --prompt_strategy all \
-    --repairer_prompt ./prompts/repair_prompts/bullet_point/bullet_point.prompt \
-    --repairer_format bullet_point_with_system_instructions \
-    --repairer_strategy all \
-    --iterations 3 \
-    --mode ./endpoints/configs/o1.json \
-    --endpoint "o1" \
-    --rust_dir "../datasets/RBench"
-```
+First we need to run the default transpile-then-repair pipeline. You must rust the code above to get the initial Rust projects. The output of the above command is stored in the `outputs/o1` directory.
 
-This will generate the transpiled code in the `outputs/o1` directory.
 Next, we need to run the test based repair. This can be done by running the following command:
 ```bash
 python repair_tests.py \
@@ -196,7 +180,7 @@ The final result will be saved in the `output/o1_test_guided_repair` directory.
 
 ### Adding your own models
 To add your own model, you must:
-1. Define the model in the `endpoints` folder, you must ensure that your model implements a `get_results` function that takes in a message and returns the response from the model in the form of a json that contains the `response` key.
+1. Define the model in the `endpoints` folder. You must ensure that your model implements a `get_results` function that takes in a message and returns the response from the model in the form of a json that contains the `response` key.
 2. Define the model configuration in the `configs` folder. The configuration file should contain the model name, the endpoint to call, and any other relevant parameters.
 3. Update the `call_endpoint.py` file to include the new model in the `endpoints` dictionary. The `endpoints` dictionary should map the model name to the corresponding endpoint function.
 
