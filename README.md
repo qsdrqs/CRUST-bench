@@ -94,6 +94,8 @@ The dataset is within the `datasets` folder as a zip file that can be extracted 
   1. __CBench__: the projects scraped from github.
   2. __RBench__: the manually annotated interfaces and corresponding tests.
 
+NOTE: You must ensure that both `CBench` and `RBench` folders are in the `datasets/`
+
 To perform a sanity type check, we provide the `check_benchmarks/check_build.py` script that produces a compilable version of the rust project with the `unimplemented!()` function bodies that can be type checked. To run the script, you need to have `rust` installed on you system. You can run the script as follows:
 
 ```python
