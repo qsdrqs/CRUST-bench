@@ -127,22 +127,22 @@ The entrypoint to our code is the `src/run.py` file that takes in the following 
 
 | Argument | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `--benchmark_dir` | `str` | ✅ Yes | – | Path to the C project (**CBench**) directory. |
-| `--rust_dir` | `str` | ❌ No | `None` | Path to the Rust project (**RBench**) directory. |
-| `--output_dir` | `str` | ✅ Yes | – | Path to the output directory. |
-| `--prompt` | `str` | ✅ Yes | – | Prompt to use for the model during transpilation. |
-| `--mode` | `str` | ❌ No | `"normal"` | Transpilation mode. Options: `normal`, `multi_gen`. |
-| `--endpoint` | `str` | ✅ Yes | – | Endpoint to use for the model. See `endpoints/call_endpoint.py` for details. |
-| `--prompt_format` | `str` | ✅ Yes | – | Format of the prompt. Options: `markdown`, `bullet_point`. |
-| `--prompt_strategy` | `str` | ❌ No | `"all"` | Strategy for composing the prompt. Options: `all` (all files are appended). |
-| `--repairer_prompt` | `str` | ✅ Yes | – | Prompt used for the repairer model. |
-| `--repairer_format` | `str` | ✅ Yes | – | Format of the repairer prompt. Options: `markdown`, `bullet_point`. |
-| `--repairer_strategy` | `str` | ✅ Yes | – | Strategy for repairer prompt. Options: `all` (all files are appended). |
-| `--iterations` | `str` | ✅ Yes | – | Number of iterations to run the repairer. |
-| `--include_headers` | `bool` | ❌ No | `True` | Whether to include header files in the prompt. |
-| `--single_benchmark` | `str` | ❌ No | `None` | Run a single benchmark only (provide its name). |
-| `--config` | `str` | ❌ No | `None` | Path to the endpoint configuration file. |
-| `--n` | `int` | ❌ No | `1` | Number of generations to request from the model during transpilation. |
+| `--benchmark_dir` | `str` | ✅ | – | Path to the C project (**CBench**) directory. |
+| `--rust_dir` | `str` | ❌ | `None` | Path to the Rust project (**RBench**) directory. |
+| `--output_dir` | `str` | ✅ | – | Path to the output directory. |
+| `--prompt` | `str` | ✅ | – | Prompt to use for the model during transpilation. |
+| `--mode` | `str` | ❌ | `"normal"` | Transpilation mode. Options: `normal`, `multi_gen`. |
+| `--endpoint` | `str` | ✅ | – | Endpoint to use for the model. See `endpoints/call_endpoint.py` for details. |
+| `--prompt_format` | `str` | ✅ | – | Format of the prompt. Options: `markdown`, `bullet_point`. |
+| `--prompt_strategy` | `str` | ❌ | `"all"` | Strategy for composing the prompt. Options: `all` (all files are appended). |
+| `--repairer_prompt` | `str` | ✅ | – | Prompt used for the repairer model. |
+| `--repairer_format` | `str` | ✅ | – | Format of the repairer prompt. Options: `markdown`, `bullet_point`. |
+| `--repairer_strategy` | `str` | ✅ | – | Strategy for repairer prompt. Options: `all` (all files are appended). |
+| `--iterations` | `str` | ✅ | – | Number of iterations to run the repairer. |
+| `--include_headers` | `bool` | ❌ | `True` | Whether to include header files in the prompt. |
+| `--single_benchmark` | `str` | ❌ | `None` | Run a single benchmark only (provide its name). |
+| `--config` | `str` | ❌ | `None` | Path to the endpoint configuration file. |
+| `--n` | `int` | ❌ | `1` | Number of generations to request from the model during transpilation. |
 
 For instance to run with OpenAI's o1 model you can run the following command:
 
