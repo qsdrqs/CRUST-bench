@@ -85,14 +85,29 @@ List any dependencies required to use the dataset:
 pip install -r requirements.txt
 ```
 
+### Environment Setup
+
+Rust is required to build the projects. You can install Rust using [rustup](https://www.rust-lang.org/tools/install).
+
 ### Loading the Dataset
 The dataset is within the `datasets` folder as a zip file that can be extracted to provide 2 folders:
   1. __CBench__: the projects scraped from github.
   2. __RBench__: the manually annotated interfaces and corresponding tests.
 
-To perform a sanity type check, we provide the `check_benchmarks/check_build.py` script that produces a compilable version of the rust project with the `unimplemented!()` function bodies that can be type checked.
+To perform a sanity type check, we provide the `check_benchmarks/check_build.py` script that produces a compilable version of the rust project with the `unimplemented!()` function bodies that can be type checked. To run the script, you need to have `rust` installed on you system. You can run the script as follows:
+
+```python
+python check_benchmarks/check_build.py
+```
 
 The `src/dataset_stats` aids in plotting metrics over the C repositories and the annotated Rust interfaces and tests.
+
+To get the statistics of the dataset, you can run the following command:
+
+```python
+python src/dataset_stats/get_c_stats.py datasets/CBench
+python src/dataset_stats/get_interfaces_stats.py datasets/RBench
+```
 
 ### Recreating experiments from CRUST-bench.
 Please set the relevant OpenAI, Antropic, Google CLOUD API keys using the environment variables.
@@ -103,8 +118,6 @@ export ANTHROPIC_API_KEY=<ANTHROPIC_API_KEY>
 export GOOGLE_CLOUD_PROJECT=<GOOGLE_CLOUD_PROJECT>
 export GOOGLE_CLOUD_REGION=<GOOGLE_CLOUD_REGION>
 ```
-
-Incase you want to test your own model, you need to define the respective model in the endpoints folder. We format all our requests in the `openai.chat.completions` API format. Ensure that you also update the `call_endpoint.py` file, and add the associated configuration of the model in the `configs` folder.
 
 We provide easy bash scripts located in the `scripts` folder that allow you to easily test your models with our pipeline. 
 
@@ -129,7 +142,64 @@ The entrypoint to our code is the `src/run.py` file that takes in the following 
 | `--config` | `str` | ❌ No | `None` | Path to the endpoint configuration file. |
 | `--n` | `int` | ❌ No | `1` | Number of generations to request from the model during transpilation. |
 
-The test based repair is only run for projects that build and test but do not pass all test cases. The associated bash script is provided in `scripts/test_based_repair/test_repair.sh`
+For instancd to run with OpenAI's o1 model you can run the following command:
+
+```bash
+python run.py \
+    --benchmark_dir "../datasets/CBench" \
+    --output_dir "outputs/o1" \
+    --prompt ./prompts/transpilation_prompts/bullet_point/bullet_point_interface.prompt \
+    --prompt_format bullet_point_with_system_instructions \
+    --prompt_strategy all \
+    --repairer_prompt ./prompts/repair_prompts/bullet_point/bullet_point.prompt \
+    --repairer_format bullet_point_with_system_instructions \
+    --repairer_strategy all \
+    --iterations 3 \
+    --mode ./endpoints/configs/claude37.json \
+    --endpoint "claude37" \
+    --rust_dir "../datasets/RBench"
+```
+
+For running more scripts, please refer to the `scripts` folder.
+
+In order to perform the test based repair:
+
+First we need to run the default transpile-then-repair pipeline. This can be done by running the following command:
+```bash
+python run.py \
+    --benchmark_dir "../datasets/CBench" \
+    --output_dir "outputs/o1" \
+    --prompt ./prompts/transpilation_prompts/bullet_point/bullet_point_interface.prompt \
+    --prompt_format bullet_point_with_system_instructions \
+    --prompt_strategy all \
+    --repairer_prompt ./prompts/repair_prompts/bullet_point/bullet_point.prompt \
+    --repairer_format bullet_point_with_system_instructions \
+    --repairer_strategy all \
+    --iterations 3 \
+    --mode ./endpoints/configs/claude37.json \
+    --endpoint "claude37" \
+    --rust_dir "../datasets/RBench"
+```
+
+This will generate the transpiled code in the `outputs/o1` directory.
+Next, we need to run the test based repair. This can be done by running the following command:
+```bash
+python repair_tests.py \
+    --input_path outputs/o1 \
+    --output_path output/o1_test_guided_repair \
+    --endpoint claude37 \
+    --iterations 3
+```
+This will select the projects that compile but fail the tests and run the repairer on them. The repaired code will be saved in the `output/o1_test_guided_repair` directory.
+
+The final result will be saved in the `output/o1_test_guided_repair` directory.
+
+### Adding your own models
+To add your own model, you must:
+1. Define the model in the `endpoints` folder, you must ensure that your model implements a `get_results` function that takes in a message and returns the response from the model in the form of a json that contains the `response` key.
+2. Define the model configuration in the `configs` folder. The configuration file should contain the model name, the endpoint to call, and any other relevant parameters.
+3. Update the `call_endpoint.py` file to include the new model in the `endpoints` dictionary. The `endpoints` dictionary should map the model name to the corresponding endpoint function.
+
 ## Citation
 
 If you use this dataset in your research, please cite our paper:
@@ -145,6 +215,8 @@ If you use this dataset in your research, please cite our paper:
   doi={10.XXXX/XXXXXXX}
 }
 ```
+
+
 
 ## License
 

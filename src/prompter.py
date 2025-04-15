@@ -93,7 +93,7 @@ class TestRepairPrompter:
         self.format_style = format_style
         self.prompting_strategy = prompting_strategy
     def __call__(self, benchmark, iteration):
-        prompter = BulletPointTestRepairPrompterWithSystemInstructions(self.system_prompt_path)
+        prompter = TestRepairPrompterInternal(self.system_prompt_path)
         prompt = prompter.build_prompt(benchmark, iteration)
         return prompt
     def parse_response(self, response):
