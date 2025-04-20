@@ -4,9 +4,10 @@ from pathlib import Path
 import json
 import shutil
 DEPENDENCIES_FILE = Path(
-    "../resources/cache/dependencies.json"
+    "./resources/cache/dependencies.json"
 )
 DEPENDENCIES = {}
+print(os.getcwd())
 with open(DEPENDENCIES_FILE, "r") as f:
     DEPENDENCIES = json.load(f)
 

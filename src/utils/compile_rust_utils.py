@@ -8,7 +8,7 @@ import csv
 import sys
 from tqdm import tqdm
 ERROR_DICT_PATH = Path(
-    "../resources/error_dict/error_dict.json"
+    "./resources/error_dict/error_dict.json"
 )
 with open(ERROR_DICT_PATH, "r", encoding="utf-8") as f:
     ERROR_DICT = json.load(f)
