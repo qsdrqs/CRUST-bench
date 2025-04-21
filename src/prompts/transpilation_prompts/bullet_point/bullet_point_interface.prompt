@@ -26,7 +26,7 @@ Please follow the instructions provided below:
   - The transpiled Rust code MUST NOT contain Foreign Function Interface calls, such as the libc library.
   - The transpiled Rust code MUST NOT contain unsafe blocks.
   - You must ensure that you import the required files that are referenced in each Rust file.
-  - You may derive traits for the datatypes that are defined, to elicit required behavior during implementation. For instance you can add #[derive(Clone)] for structs when the Clone trait is required for implementation.
+  - You may derive traits for the data types that are defined, to elicit required behavior during implementation. For instance you can add #[derive(Clone)] for structs when the Clone trait is required for implementation.
   - All imports in the rust file must be in the following format - 
     ```rust
       use crate::file_name::module;
