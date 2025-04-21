@@ -193,12 +193,10 @@ If you use this dataset in your research, please cite our paper:
 ```bibtex
 @article{CRUST-bench,
   title=CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation,
-  author={Last, First and Co-author, Second and et al.},
-  journal={Journal/Conference Name},
+  author={Khatry, Anirudh and Zhang, Robert and Pan, Jia and Wang, Ziteng and Chen, Qiaochu and Durrett, Greg and Dillig, Isil},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
   year={2025},
-  volume={XX},
-  pages={XXX-XXX},
-  doi={10.XXXX/XXXXXXX}
+  url={https://arxiv.org/abs/XXXX.XXXXX}
 }
 ```
 
@@ -206,7 +204,7 @@ If you use this dataset in your research, please cite our paper:
 
 ## License
 
-This dataset is released under [LICENSE NAME] license. See [LICENSE](LICENSE) for details.
+This dataset is released under the GNU General Public License v3.0 (GPL-3.0) license. See [LICENSE](./LICENSE) for details.
 
 ## Contact
 
