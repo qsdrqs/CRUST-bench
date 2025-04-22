@@ -3,7 +3,7 @@
 Authors: Anirudh Khatry, Robert Zhang, Jia Pan, Ziteng Wang, Qiaochu Chen, Greg Durrett, Isil Dillig.
 
 ![Dataset Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-GNU%20GPL-blue)
 ![Last Updated](https://img.shields.io/badge/last%20updated-April%202025-orange)
 
 ![CRUST-bench workflow](./src/resources/CRUST-bench.png)
@@ -207,7 +207,7 @@ If you use this dataset in your research, please cite our paper:
 
 ## License
 
-This dataset is released under [LICENSE NAME] license. See [LICENSE](LICENSE) for details.
+This dataset is released under GNU GPL license. See [LICENSE](LICENSE) for details.
 
 ## Contact
 
