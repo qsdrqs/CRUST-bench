@@ -15,7 +15,7 @@ C-to-Rust transpilation is essential for modernizing legacy C code while enhanci
 ## Paper
 
 Our paper "CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation" is available at:
-- [arXiv](https://arxiv.org/abs/XXXX.XXXXX)
+- [arXiv](https://arxiv.org/abs/2504.15254)
 
 ## Dataset Description
 
@@ -191,12 +191,15 @@ To add your own model, you must:
 If you use this dataset in your research, please cite our paper:
 
 ```bibtex
-@article{CRUST-bench,
-  title=CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation,
-  author={Khatry, Anirudh and Zhang, Robert and Pan, Jia and Wang, Ziteng and Chen, Qiaochu and Durrett, Greg and Dillig, Isil},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+@misc{
+  khatry2025crustbenchcomprehensivebenchmarkctosaferust,
+  title={CRUST-Bench: A Comprehensive Benchmark for C-to-safe-Rust Transpilation}, 
+  author={Anirudh Khatry and Robert Zhang and Jia Pan and Ziteng Wang and Qiaochu Chen and Greg Durrett and Isil Dillig},
   year={2025},
-  url={https://arxiv.org/abs/XXXX.XXXXX}
+  eprint={2504.15254},
+  archivePrefix={arXiv},
+  primaryClass={cs.SE},
+  url={https://arxiv.org/abs/2504.15254}, 
 }
 ```
 
@@ -204,7 +207,7 @@ If you use this dataset in your research, please cite our paper:
 
 ## License
 
-This dataset is released under the GNU General Public License v3.0 (GPL-3.0) license. See [LICENSE](./LICENSE) for details.
+This dataset is released under [LICENSE NAME] license. See [LICENSE](LICENSE) for details.
 
 ## Contact
 
@@ -215,4 +218,7 @@ For questions, issues, or further information, please contact:
 
 ## Acknowledgments
 
-Acknowledge any funding sources, organizations, or individuals who contributed to the creation of this dataset.
+This research was conducted within a group supported by the National Science Foundation
+under awards CCF-1762299, CCF-1918889, CNS-1908304, CCF-1901376, CNS-2120696, CCF-
+2210831, and CCF-2319471. We also thank the All Hands AI team for a discussion on the
+OpenHands CodeAct agentic framework applied to the C-to-Rust transpilation task.
