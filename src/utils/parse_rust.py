@@ -9,7 +9,7 @@ import re
 # Build and include the Rust language library
 Language.build_library(
     "rust_build/my-languages.so",
-    ["../resources/tree-sitter-rust"],
+    ["./resources/tree-sitter-rust"],
 )
 
 RUST_LANGUAGE = Language("rust_build/my-languages.so", "rust")
