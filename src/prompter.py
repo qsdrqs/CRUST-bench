@@ -2,11 +2,12 @@ import os
 import json
 from pathlib import Path
 import re
-from benchmark import Benchmark, TestBenchmark
+from benchmark import Benchmark
 from utils.parse_rust import function_signture_builder
 from prompters.repair import (
     MarkdownRepairPrompter,
     BulletPointRepairPrompter,
+    GraphRepairPrompter
 )
 from prompters.transpile import (
     MarkdownPrompter,
@@ -113,6 +114,8 @@ class RepairPrompter:
                 reminder = 'format_reminder'
             elif self.format_style == 'markdown_with_system_instructions':
                 reminder = 'format_reminder'
+            elif self.format_style == 'graph':
+                reminder = None
             else:
                 raise NotImplementedError("Format style not implemented")
 
@@ -148,6 +151,13 @@ class RepairPrompter:
                 return prompt
             else:
                 raise NotImplementedError("Prompting strategy not implemented")
+        elif 'graph' in self.format_style:
+            reminder = None
+            prompter = GraphRepairPrompter(
+                self.system_prompt_path, reminder
+            )
+            prompt = prompter.build_prompt(benchmark, iteration)
+            return prompt
         else:
             raise NotImplementedError("Format style not implemented")
 

@@ -9,7 +9,7 @@ import subprocess
 
 Language.build_library(
     "c_build/my-languages.so",
-    ["../resources/tree-sitter-c"],
+    ["./resources/tree-sitter-c"],
 )
 C_LANGUAGE = Language("c_build/my-languages.so", "c")
 PARSER = Parser()
