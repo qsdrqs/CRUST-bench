@@ -4,7 +4,7 @@ from pathlib import Path
 import json
 import shutil
 DEPENDENCIES_FILE = Path(
-    "./resources/cache/dependencies.json"
+    "../resources/cache/dependencies.json"
 )
 DEPENDENCIES = {}
 print(os.getcwd())
