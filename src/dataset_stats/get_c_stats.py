@@ -11,6 +11,8 @@ import glob
 # Reusing your existing parser setup
 from tree_sitter import Language, Parser
 
+FILE_PATH = Path(__file__)
+
 # Assuming the Language setup is already done as in your code
 # If not, uncomment these lines and adjust the paths
 """
@@ -19,7 +21,7 @@ Language.build_library(
     ["path/to/tree-sitter-c"],
 )
 """
-C_LANGUAGE = Language("../utils/c_build/my-languages.so", "c")
+C_LANGUAGE = Language(FILE_PATH.parent / "utils/c_build/my-languages.so", "c")
 PARSER = Parser()
 PARSER.set_language(C_LANGUAGE)
 

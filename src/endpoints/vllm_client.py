@@ -6,7 +6,11 @@ import json
 import multiprocessing
 from openai import OpenAI
 
-CACHE_FILE = Path("../../cache/os_model_cache.jsonl")
+FILE_PATH = Path(__file__)
+CACHE_FILE = FILE_PATH.parent / "cache/os_model_cache.jsonl"
+if not CACHE_FILE.parent.exists():
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+
 # Turn this off only when necessary
 CACHE_FLAG = True
 if not os.path.exists(CACHE_FILE):
@@ -26,7 +30,7 @@ class VLLMServer:
         self.openai_api_key = "EMPTY"
         self.openai_api_base = ""
         with open(
-            f"server_url_{self.model_name.split('/')[-1]}.txt", "r", encoding="utf-8"
+            FILE_PATH.parent / f"server_url_{self.model_name.split('/')[-1]}.txt", "r", encoding="utf-8"
         ) as file:
             self.openai_api_base = file.read().strip()
         self.openai_api_base += "/v1"
@@ -92,7 +96,7 @@ def test_call_gpt(server, config):
 
 
 if __name__ == "__main__":
-    config1 = Path("./configs/qwq.json").read_text()
+    config1 = (FILE_PATH.parent / "configs/qwq.json").read_text()
     config1 = json.loads(config1)
     server = VLLMServer("qwq")
     test_call_gpt(server, config1)

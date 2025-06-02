@@ -13,7 +13,7 @@ import os
 import sys
 import subprocess
 import argparse
-sys.path.append('../')
+FILE_PATH = Path(__file__)
 import shutil
 from swe_ver1_compile import (
     compile,
@@ -24,9 +24,9 @@ from swe_ver1_compile import (
 )
 
 DOCKER_IMAGE_PATH = 'anirudhkhatry/rust-python-env:latest'
-PROBLEM_STATEMENT_PATH = Path('./problem_statements/ps1.md')
-CARGO_PATH = Path('../resources/cache/dependencies.json')
-CONFIG_PATH = Path('./config/rust_transpile.yaml')
+PROBLEM_STATEMENT_PATH = Path(__file__).parent / 'problem_statements/ps1.md'
+CARGO_PATH = Path(__file__).parent.parent / 'resources/cache/dependencies.json'
+CONFIG_PATH = Path(__file__).parent / 'config/swe_transpile.yaml'
 SWE_AGENT_PATH = Path('<PATH_TO_SWE_AGENT>') # Replace with the actual path to the SWE agent
 
 def run_command(command, cwd):

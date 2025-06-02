@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
 
-CONFIG_PATH = Path("./endpoints/configs")
+FILE_PATH = Path(__file__)
+CONFIG_PATH = FILE_PATH.parent / "endpoints/configs"
 
 
 def endpoint_resolver(config, endpoint):

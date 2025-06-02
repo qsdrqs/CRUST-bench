@@ -4,15 +4,18 @@ import os
 import json
 import multiprocessing
 
+FILE_PATH = Path(__file__)
 
 class QwQ:
     def __init__(self):
 
-        self.CACHE_FILE = Path("../../cache/qwq_cache.jsonl")
+        self.CACHE_FILE = FILE_PATH.parent / "cache/qwq_cache.jsonl"
+        if not self.CACHE_FILE.parent.exists():
+            self.CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
         model_name = "Qwen/QwQ-32B-Preview"
 
         self.MODEL = AutoModelForCausalLM.from_pretrained(
-            model_name, torch_dtype="auto", device_map="auto"
+            model_name, torch_dtype="auto", device_map="auto"   
         )
         self.TOKENIZER = AutoTokenizer.from_pretrained(model_name)
 

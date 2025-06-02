@@ -3,10 +3,8 @@ from multiprocessing import Pool
 from tqdm import tqdm
 from pathlib import Path
 from endpoints.call_endpoint import get_result
-import json
 from functools import partial
 import time
-import subprocess
 
 def get_results_benchmark(lock_and_prompts, endpoint, config):
     lock, prompts = lock_and_prompts

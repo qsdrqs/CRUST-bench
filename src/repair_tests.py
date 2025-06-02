@@ -70,7 +70,7 @@ def main():
     if not output_dir.exists():
         output_dir.mkdir(parents=True, exist_ok=True)
     endpoint = args.endpoint
-    repairer_prompt = Path('./prompts/test_repair_prompts/repair.txt')
+    repairer_prompt = Path(__file__).parent / 'prompts/test_repair_prompts/repair.txt'
     import shutil
     shutil.rmtree(output_dir, ignore_errors=True)
     output_dir.mkdir(parents=True, exist_ok=True)

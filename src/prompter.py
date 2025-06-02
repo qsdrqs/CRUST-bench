@@ -14,7 +14,7 @@ from prompters.transpile import (
     BulletPointPrompter,
 )
 from prompters.test_repair import TestRepairPrompterInternal
-
+from utils.parse_rust import find_best_parser
 
 class Prompter:
     def __init__(
@@ -172,14 +172,5 @@ class RepairPrompter:
             raise NotImplementedError("Format style not implemented")
 
 
-
 if __name__ == "__main__":
-    c_path = "../datasets/raw/github/CircularBuffer"
-    rust_path = "../datasets/processed/github"
-    system_prompt_path = "./prompts/safe_rust_ffi/old_prompts/safe_rust_ffi_system.prompt"
-
-    print(f"Processing project: {c_path}")
-    benchmark = Benchmark(c_path, rust_path)
-    prompter = Prompter(system_prompt_path, "markdown")
-    prompts = prompter.__call__(benchmark)
-    print(prompts[0][1])
+    pass

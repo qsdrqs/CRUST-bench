@@ -7,9 +7,8 @@ from typing import List
 import csv
 import sys
 from tqdm import tqdm
-ERROR_DICT_PATH = Path(
-    "./resources/error_dict/error_dict.json"
-)
+FILE_PATH = Path(__file__)
+ERROR_DICT_PATH = FILE_PATH.parent.parent / "resources/error_dict/error_dict.json"
 with open(ERROR_DICT_PATH, "r", encoding="utf-8") as f:
     ERROR_DICT = json.load(f)
 

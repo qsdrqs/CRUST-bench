@@ -3,9 +3,8 @@ import subprocess
 from pathlib import Path
 import json
 import shutil
-DEPENDENCIES_FILE = Path(
-    "../resources/cache/dependencies.json"
-)
+FILE_PATH=Path(__file__)
+DEPENDENCIES_FILE = FILE_PATH.parent.parent / "resources/cache/dependencies.json"
 DEPENDENCIES = {}
 print(os.getcwd())
 with open(DEPENDENCIES_FILE, "r") as f:

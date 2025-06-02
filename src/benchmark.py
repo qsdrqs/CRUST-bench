@@ -197,8 +197,8 @@ class Benchmark:
 
 
 if __name__ == "__main__":
-    c_path = '../datasets/CBench'
-    rust_path = "../datasets/RBench"
+    c_path = Path(__file__).parent.parent / 'datasets/CBench'
+    rust_path = Path(__file__).parent.parent / 'datasets/RBench'
     for proj in os.listdir(c_path):
         b = Benchmark(f"{c_path}/{proj}", f"{rust_path}")
     print("successfully created benchmarks")

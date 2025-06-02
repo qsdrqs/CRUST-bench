@@ -7,11 +7,12 @@ import sys
 from tree_sitter import Language, Parser
 import subprocess
 
+FILE_PATH = Path(__file__)
 Language.build_library(
-    "c_build/my-languages.so",
-    ["./resources/tree-sitter-c"],
+    FILE_PATH.parent / "c_build/my-languages.so",
+    [FILE_PATH.parent.parent / "resources/tree-sitter-c"],
 )
-C_LANGUAGE = Language("c_build/my-languages.so", "c")
+C_LANGUAGE = Language(str(FILE_PATH.parent / "c_build/my-languages.so"), "c")
 PARSER = Parser()
 PARSER.set_language(C_LANGUAGE)
 

@@ -5,8 +5,10 @@ import multiprocessing
 from openai import OpenAI
 
 client = OpenAI()
-CACHE_FILE = Path("../../cache/gpt_cache.jsonl")
-
+FILE_PATH = Path(__file__)
+CACHE_FILE = FILE_PATH.parent / "cache/gpt_cache.jsonl"
+if not CACHE_FILE.parent.exists():
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
 # Turn this off only when necessary
 CACHE_FLAG = True
 if not os.path.exists(CACHE_FILE):
@@ -122,6 +124,6 @@ def test_call_gpt(config):
 
 
 if __name__ == "__main__":
-    config1 = Path("./configs/gpt_4_o.json").read_text()
+    config1 = (FILE_PATH.parent / "configs/gpt_4o.json").read_text()
     config1 = json.loads(config1)
     test_call_gpt(config1)

@@ -4,8 +4,9 @@ import sys
 import os
 import csv
 import json
-import subprocess
-ERROR_DICT_PATH = Path('./resources/error_dict/error_dict.json')
+
+FILE_PATH = Path(__file__)
+ERROR_DICT_PATH = FILE_PATH.parent / 'resources/error_dict/error_dict.json'
 with open(ERROR_DICT_PATH, 'r') as f:
     ERROR_DICT = json.load(f)
 def find_unsafe_code(proj_path):

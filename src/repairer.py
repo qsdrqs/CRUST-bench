@@ -112,5 +112,4 @@ class Repairer:
 
 
 if __name__ == "__main__":
-    c_path = "/mnt/nas/anirudh/C_to_Rust/datasets/raw/github"
-    rust_path = "/mnt/nas/anirudh/C_to_Rust/datasets/processed/github"
+    pass

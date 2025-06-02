@@ -28,8 +28,10 @@ if not PROJECT_ID or PROJECT_ID == "[your-project-id]":
 LOCATION = os.environ.get("GOOGLE_CLOUD_REGION", "GOOGLE REGION")
 client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
 
-GEMINI_CACHE = Path("../../cache/gemini_cache.jsonl")
-
+FILE_PATH = Path(__file__)
+GEMINI_CACHE = FILE_PATH.parent / "cache/gemini_cache.jsonl"
+if not GEMINI_CACHE.parent.exists():
+    GEMINI_CACHE.parent.mkdir(parents=True, exist_ok=True)
 
 CACHE_FLAG = True
 if not os.path.exists(GEMINI_CACHE):
@@ -59,7 +61,7 @@ def call_gemini(messages, config):
 
 def get_result(messages, lock, config):
     if config is None:
-        config_path = Path("./configs/gemini.json")
+        config_path = FILE_PATH.parent / "configs/gemini.json"
         config = json.loads(config_path.read_text())
     current_prompt = (
         "\n".join([msg["content"] for msg in messages]) + f"\n{json.dumps(config)}"

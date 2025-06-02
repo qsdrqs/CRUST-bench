@@ -6,13 +6,15 @@ import sys
 import os
 import re
 
+FILE_PATH = Path(__file__)
+print(FILE_PATH)
 # Build and include the Rust language library
 Language.build_library(
-    "rust_build/my-languages.so",
-    ["./resources/tree-sitter-rust"],
+    FILE_PATH.parent / "rust_build/my-languages.so",
+    [FILE_PATH.parent.parent / "resources/tree-sitter-rust"],
 )
 
-RUST_LANGUAGE = Language("rust_build/my-languages.so", "rust")
+RUST_LANGUAGE = Language(str(FILE_PATH.parent / "rust_build/my-languages.so"), "rust")
 EMPTY_MAIN_STRING = 'fn main() {\n    println!("Hello, world!");\n}'
 # Initialize the parser
 PARSER = Parser()

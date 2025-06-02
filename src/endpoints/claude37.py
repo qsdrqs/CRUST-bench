@@ -4,8 +4,10 @@ import os
 import json
 import multiprocessing
 
-CLAUDE_CACHE = Path("../../cache/claude_3_7_cache.jsonl")
-
+FILE_PATH = Path(__file__)
+CLAUDE_CACHE = FILE_PATH.parent / "cache/claude_3_7_cache.jsonl"
+if not CLAUDE_CACHE.parent.exists():
+    CLAUDE_CACHE.parent.mkdir(parents=True, exist_ok=True)
 client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
 )
@@ -35,7 +37,7 @@ def call_claude(messages, config):
 
 def get_result(messages, lock, config):
     if config is None:
-        config_path = Path("./configs/claude.json")
+        config_path = FILE_PATH.parent / "configs/claude.json"
         config = json.loads(config_path.read_text())
     current_prompt = (
         "\n".join([msg["content"] for msg in messages]) + f"\n{json.dumps(config)}"

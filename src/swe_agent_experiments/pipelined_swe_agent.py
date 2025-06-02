@@ -9,7 +9,8 @@ import os
 import sys
 import subprocess
 import argparse
-sys.path.append('../')
+FILE_PATH = Path(__file__)
+sys.path.append(FILE_PATH.parent)
 import shutil
 from compile_projects import compile
 from utils.compile_rust_utils import (
@@ -19,12 +20,12 @@ from utils.compile_rust_utils import (
     performance_stats
 )
 
-SWE_AGENT_PATH = Path('../swe_agent')
+SWE_AGENT_PATH = Path('<PATH_TO_SWE_AGENT>')
 
 DOCKER_IMAGE_PATH = 'anirudhkhatry/rust-python-env:latest'
-PROBLEM_STATEMENT_PATH = Path('./problem_statements/ps2.md')
-CARGO_PATH = Path('../resources/cache/dependencies.json')
-CONFIG_PATH = Path('./config/rust_repair.yaml')
+PROBLEM_STATEMENT_PATH = Path(__file__).parent / 'problem_statements/ps2.md'
+CARGO_PATH = Path(__file__).parent.parent / 'resources/cache/dependencies.json'
+CONFIG_PATH = Path(__file__).parent / 'config/swe_repair.yaml'
 
 
 def run_command(command, cwd):
