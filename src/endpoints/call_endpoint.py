@@ -2,11 +2,12 @@ import endpoints.claude as claude
 import endpoints.claude37 as claude37
 import endpoints.gpt as gpt
 import endpoints.qwq as qwq
-import endpoints.gemini as gemini
+# uncomment the next line if you want to use gemini
+# import endpoints.gemini as gemini
 import multiprocessing
 import json
 import sys
-import vllm_client as vclient
+import endpoints.vllm_client as vclient
 
 
 def get_result(messages, lock, model, config):

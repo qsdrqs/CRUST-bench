@@ -103,7 +103,6 @@ class Runner:
         Endpoint: {self.endpoint}
         Include interfaces: {self.include_headers}
         Config: {self.config}
-        Rust path: {self.rust_dir}
         ''')
  
 
@@ -212,36 +211,37 @@ class Runner:
 
 
 def main(args):
-        config = endpoint_resolver(args.config, args.endpoint)
-        runner = Runner(
-            benchmark_dir=args.benchmark_dir,
-            output_dir=args.output_dir,
-            prompt=args.prompt,
-            prompt_format=args.prompt_format,
-            prompt_strategy=args.prompt_strategy,
-            repairer_prompt=args.repairer_prompt,
-            repairer_format=args.repairer_format,
-            repairer_strategy=args.repairer_strategy,
-            iterations=args.iterations,
-            endpoint=args.endpoint,
-            include_headers=args.include_headers,
-            config=config,
-            single_benchmark=args.single_benchmark,
-            rust_dir=args.rust_dir,
-            n=args.n,
-        )
-        config = {}
-        if args.config:
-            with open(args.config, "r") as f:
-                config = json.load(f)
-        if args.mode == "normal":
-            runner.test_perf()
-        elif args.mode == "multi_gen":
-            print(f"Top-{args.n} generation, with temperature {config['temperature']}")
-            runner.multi_gen()
-        else:
-            raise ValueError("Invalid mode")
-    
+    config = endpoint_resolver(args.config, args.endpoint)
+    runner = Runner(
+        benchmark_dir=args.benchmark_dir,
+        output_dir=args.output_dir,
+        prompt=args.prompt,
+        prompt_format=args.prompt_format,
+        prompt_strategy=args.prompt_strategy,
+        repairer_prompt=args.repairer_prompt,
+        repairer_format=args.repairer_format,
+        repairer_strategy=args.repairer_strategy,
+        iterations=args.iterations,
+        endpoint=args.endpoint,
+        include_headers=args.include_headers,
+        config=config,
+        single_benchmark=args.single_benchmark,
+        rust_dir=args.rust_dir,
+        n=args.n,
+    )
+    config = {}
+    print("mode:", args.mode)
+    if args.config:
+        with open(args.config, "r") as f:
+            config = json.load(f)
+    if args.mode == "normal":
+        runner.test_perf()
+    elif args.mode == "multi_gen":
+        print(f"Top-{args.n} generation, with temperature {config['temperature']}")
+        runner.multi_gen()
+    else:
+        raise ValueError("Invalid mode")
+
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Evaluate your model with CRUST-bench")
