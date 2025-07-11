@@ -211,30 +211,8 @@ class Runner:
         get_numbers(self.output_dir)
 
 
-
-    
-
-if __name__ == "__main__":
-    argparser = argparse.ArgumentParser(description="Evaluate your model with CRUST-bench")
-    argparser.add_argument("--benchmark_dir", type=str, required=True, help="Path to the C project (CBench) directory")
-    argparser.add_argument("--rust_dir", type=str, required=False, help="Path to the Rust project (RBench) directory")
-    argparser.add_argument("--output_dir", type=str, required=True, help="Path to the output directory")
-    argparser.add_argument("--prompt", type=str, required=True, help="Prompt to use for the model")
-    argparser.add_argument("--mode", type=str, default="normal", help="The mode(normal, multi_gen), that does the transpilation")
-    argparser.add_argument("--endpoint", type=str, required=True, help="Endpoint to use for the model. Look at the `endpoints/call_endpoint.py` for more information.")
-    argparser.add_argument("--prompt_format", type=str, required=True, help="Format of the prompt (markdown, bullet_point)")
-    argparser.add_argument("--prompt_strategy", type=str, required=False, default="all", help="Strategy to use for the prompt (all- all files are appended to the prompt)")
-    argparser.add_argument("--repairer_prompt", type=str, required=True, help="Prompt to use for the repairer")
-    argparser.add_argument("--repairer_format", type=str, required=True, help="Format of the repairer prompt(markdown, bullet_point)")
-    argparser.add_argument("--repairer_strategy", type=str, required=True, help="Strategy to use for the repairer prompt(all- all files are appended to the prompt)")
-    argparser.add_argument("--iterations", type=str, required=True, help="Number of iterations to run the repairer")
-    argparser.add_argument("--include_headers", type=bool, default=True, help="Whether to include headers in the prompt")
-    argparser.add_argument("--single_benchmark", type=str, default=None, help="Set this flag when you only want to run a single benchmark to run")
-    argparser.add_argument("--config", type=str, required=False, default=None, help="Path to the endpoint config file")
-    argparser.add_argument("--n", type=int, default=1, help="Number of generations to receive from the model during transpilation")
-    args = argparser.parse_args()
-    config = endpoint_resolver(args.config, args.endpoint)
-    def main():
+def main(args):
+        config = endpoint_resolver(args.config, args.endpoint)
         runner = Runner(
             benchmark_dir=args.benchmark_dir,
             output_dir=args.output_dir,
@@ -263,4 +241,25 @@ if __name__ == "__main__":
             runner.multi_gen()
         else:
             raise ValueError("Invalid mode")
+    
 
+if __name__ == "__main__":
+    argparser = argparse.ArgumentParser(description="Evaluate your model with CRUST-bench")
+    argparser.add_argument("--benchmark_dir", type=str, required=True, help="Path to the C project (CBench) directory")
+    argparser.add_argument("--rust_dir", type=str, required=False, help="Path to the Rust project (RBench) directory")
+    argparser.add_argument("--output_dir", type=str, required=True, help="Path to the output directory")
+    argparser.add_argument("--prompt", type=str, required=True, help="Prompt to use for the model")
+    argparser.add_argument("--mode", type=str, default="normal", help="The mode(normal, multi_gen), that does the transpilation")
+    argparser.add_argument("--endpoint", type=str, required=True, help="Endpoint to use for the model. Look at the `endpoints/call_endpoint.py` for more information.")
+    argparser.add_argument("--prompt_format", type=str, required=True, help="Format of the prompt (markdown, bullet_point)")
+    argparser.add_argument("--prompt_strategy", type=str, required=False, default="all", help="Strategy to use for the prompt (all- all files are appended to the prompt)")
+    argparser.add_argument("--repairer_prompt", type=str, required=True, help="Prompt to use for the repairer")
+    argparser.add_argument("--repairer_format", type=str, required=True, help="Format of the repairer prompt(markdown, bullet_point)")
+    argparser.add_argument("--repairer_strategy", type=str, required=True, help="Strategy to use for the repairer prompt(all- all files are appended to the prompt)")
+    argparser.add_argument("--iterations", type=str, required=True, help="Number of iterations to run the repairer")
+    argparser.add_argument("--include_headers", type=bool, default=True, help="Whether to include headers in the prompt")
+    argparser.add_argument("--single_benchmark", type=str, default=None, help="Set this flag when you only want to run a single benchmark to run")
+    argparser.add_argument("--config", type=str, required=False, default=None, help="Path to the endpoint config file")
+    argparser.add_argument("--n", type=int, default=1, help="Number of generations to receive from the model during transpilation")
+    args = argparser.parse_args()
+    main(args)
