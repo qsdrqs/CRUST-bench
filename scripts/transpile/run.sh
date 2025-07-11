@@ -25,7 +25,7 @@ if [[ "$model" != "claude" && "$model" != "claude37" && "$model" != "gpt-4o" && 
 fi
 
 python run.py \
-    --benchmark_dir "$cdir" \
+    --benchmark_dir "$c_dir" \
     --output_dir "$odir/$model/$config/bullet_point_with_system_instructions" \
     --prompt ./prompts/transpilation_prompts/bullet_point/bullet_point_interface.prompt \
     --prompt_format bullet_point_with_system_instructions \
