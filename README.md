@@ -218,7 +218,9 @@ For questions, issues, or further information, please contact:
 
 ## Acknowledgments
 
-This research was conducted within a group supported by the National Science Foundation
-under awards CCF-1762299, CCF-1918889, CNS-1908304, CCF-1901376, CNS-2120696, CCF-
-2210831, and CCF-2319471. We also thank the All Hands AI team for a discussion on the
-OpenHands CodeAct agentic framework applied to the C-to-Rust transpilation task.
+This research was conducted within a group supported by the National Science Founda-
+tion under awards CCF-1762299, CCF-1918889, CNS-1908304, CCF-1901376, CNS-2120696,
+CCF-2210831, CCF-2319471, and and by the Defense Advanced Research Projects Agency
+(DARPA) under Agreement No. HR00112590133. We also thank the All Hands AI team
+for a discussion on the OpenHands CodeAct agentic framework applied to the C-to-Rust
+transpilation task.
