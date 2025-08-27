@@ -69,12 +69,13 @@ def format_rust_proj():
         
 def clean_rust_projects():
     path = DATASETS_PATH / 'RBench_formatted'
-    if path.exists():
-        shutil.rmtree(path)
+    
     proj_list = list(path.iterdir())
     for proj in tqdm(proj_list):
         if proj.is_dir():
             clean_rust_project(proj)
+    if path.exists():
+        shutil.rmtree(path)
     print('done')
 
 if __name__ == "__main__":    
