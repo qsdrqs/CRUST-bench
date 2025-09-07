@@ -1,0 +1,6 @@
+[submodule "src/resources/tree-sitter-rust"]
+	path = src/resources/tree-sitter-rust
+	url = https://github.com/tree-sitter/tree-sitter-rust
+[submodule "src/resources/tree-sitter-c"]
+	path = src/resources/tree-sitter-c
+	url = https://github.com/tree-sitter/tree-sitter-c
