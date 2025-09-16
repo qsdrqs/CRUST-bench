@@ -1,5 +1,5 @@
 
-from prompters.test_repair import BulletPointTestRepairPrompterWithSystemInstructions
+from prompters.test_repair import TestRepairPrompterInternal
 from test_repairer import TestRepairer
 from endpoint_config import endpoint_resolver
 from pathlib import Path
@@ -13,12 +13,12 @@ from utils.rust_project_builder import write_rust_files
 from compile_projects import test
 from benchmark import Benchmark
 import argparse
+from understand_errors import process_proj, get_numbers
 def repair_tests(benchmarks, iterations, repairer_prompt:Path, endpoint, config, output_dir):
     test_results = []
     test(output_dir,0)
     for i in range(iterations):
-        
-        test_repair_prompter = BulletPointTestRepairPrompterWithSystemInstructions(
+        test_repair_prompter = TestRepairPrompterInternal(
             repairer_prompt)
         repairer = TestRepairer(
             benchmarks, test_repair_prompter, i, endpoint, config=config
@@ -33,6 +33,8 @@ def repair_tests(benchmarks, iterations, repairer_prompt:Path, endpoint, config,
     final_test_report(output_dir)
     get_errors_for_iteration(output_dir)
     performance_stats(output_dir)
+    process_proj(output_dir)
+    get_numbers(output_dir)
 
 def load_benchmarks(r_path: Path):
     C_BENCH = Path('../datasets/CBench')
@@ -75,7 +77,8 @@ def main():
     shutil.rmtree(output_dir, ignore_errors=True)
     output_dir.mkdir(parents=True, exist_ok=True)
     for proj in r_path.iterdir():
-        shutil.copytree(proj, output_dir / proj.name)
+        if proj.is_dir() and Path(proj/'Cargo.toml').exists():
+            shutil.copytree(proj, output_dir / proj.name)
     
     if config != None:
         config = Path(config)
