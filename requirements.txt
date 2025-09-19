@@ -37,3 +37,4 @@ transformers==4.48.1
 tree-sitter==0.21.0
 typing_extensions==4.12.2
 urllib3==2.3.0
+matplotlib==3.10.6
