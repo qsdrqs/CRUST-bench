@@ -63,8 +63,9 @@ def format_rust_proj():
         output_path.mkdir(parents=True, exist_ok=True)
     proj_list = list(path.iterdir())
     for proj in tqdm(proj_list):
-        shutil.copytree(proj, output_path / proj.name, dirs_exist_ok=True)
-        format_into_compilable_rust(output_path / proj.name)
+        if proj.is_dir():
+            shutil.copytree(proj, output_path / proj.name, dirs_exist_ok=True)
+            format_into_compilable_rust(output_path / proj.name)
 
         
 def clean_rust_projects():
