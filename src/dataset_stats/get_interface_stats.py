@@ -6,14 +6,23 @@ from tree_sitter import Language, Parser
 import sys
 import re
 from collections import defaultdict
-from parse_rust import get_rust_functions
 # Use the existing tree-sitter setup
 FILE_PATH = Path(__file__)
-RUST_LANGUAGE = Language(FILE_PATH.parent / "utils/rust_build/my-languages.so", "rust")
+
+from utils.parse_rust import get_rust_functions
+
+Language.build_library(
+    FILE_PATH.parent / "rust_build/my-languages.so",
+    [FILE_PATH.parent.parent / "resources/tree-sitter-rust"],
+)
+
+RUST_LANGUAGE = Language(str(FILE_PATH.parent / "rust_build/my-languages.so"), "rust")
+EMPTY_MAIN_STRING = 'fn main() {\n    println!("Hello, world!");\n}'
+# Initialize the parser
 PARSER = Parser()
 PARSER.set_language(RUST_LANGUAGE)
-
 class RustProjectAnalyzer:
+
     def __init__(self):
         self.project_stats = {}
         self.cumulative_stats = {
@@ -431,43 +440,44 @@ class RustProjectAnalyzer:
                     percentage_functions_with_custom_return_type += 1
             if len(stats["functions"]) == 0:
                 print(project_name)
-            percentage_function_with_mut = stats["mut_arguments"] / len(stats["functions"]) * 100
-            percentage_functions_with_lifetime = stats["lifetime_annotations"] / len(stats["functions"]) * 100
-            percentage_functions_with_pointer_like_types = stats["pointer_like_types"] / len(stats["functions"]) * 100
-            percentage_functions_with_borrowed_args = percentage_functions_with_borrowed_args / len(self.project_stats[project_name]["functions"]) * 100
-            percentage_functions_custom_type = percentage_functions_custom_type / len(self.project_stats[project_name]["functions"]) * 100
-            percentage_functions_with_custom_return_type = percentage_functions_with_custom_return_type / len(self.project_stats[project_name]["functions"]) * 100
-                
-            report["project_stats"][project_name] = {
-                "total_files": stats["total_files"],
-                "interface_files": stats["interface_files"],
-                "total_functions": len(stats["functions"]),
-                "total_args": stats["total_arguments"],
-                "borrowed_arguments": stats["borrowed_arguments"],
-                "custom_arg_types": list(stats["custom_arg_types"]),
-                "custom_arg_types_count": len(stats["custom_arg_types"]),
-                "custom_return_types": list(stats["custom_return_types"]),
-                "custom_return_types_count": len(stats["custom_return_types"]),
-                "pointers": stats["pointers"],
-                "percentage_functions_with_borrowed_args": percentage_functions_with_borrowed_args,
-                "percentage_functions_custom_type": percentage_functions_custom_type,
-                "percentage_functions_with_custom_return_type": percentage_functions_with_custom_return_type,
-                "percentage_functions_with_mut": percentage_function_with_mut,
-                "percentage_functions_with_lifetime": percentage_functions_with_lifetime,
-                "percentage_functions_with_pointer_like_types": percentage_functions_with_pointer_like_types,
-                "custom_types": {
-                    "structs": list(stats["custom_types"]["structs"]),
-                    "structs_count": len(stats["custom_types"]["structs"]),
-                    "enums": list(stats["custom_types"]["enums"]),
-                    "enums_count": len(stats["custom_types"]["enums"]),
-                    "type_aliases": list(stats["custom_types"]["type_aliases"]),
-                    "type_aliases_count": len(stats["custom_types"]["type_aliases"]),
-                    "traits": list(stats["custom_types"]["traits"]),
-                    "traits_count": len(stats["custom_types"]["traits"])
-                },
-                "traits_implemented": stats["traits_implemented"]
-            }
-        
+            else:
+                percentage_function_with_mut = stats["mut_arguments"] / len(stats["functions"]) * 100
+                percentage_functions_with_lifetime = stats["lifetime_annotations"] / len(stats["functions"]) * 100
+                percentage_functions_with_pointer_like_types = stats["pointer_like_types"] / len(stats["functions"]) * 100
+                percentage_functions_with_borrowed_args = percentage_functions_with_borrowed_args / len(self.project_stats[project_name]["functions"]) * 100
+                percentage_functions_custom_type = percentage_functions_custom_type / len(self.project_stats[project_name]["functions"]) * 100
+                percentage_functions_with_custom_return_type = percentage_functions_with_custom_return_type / len(self.project_stats[project_name]["functions"]) * 100
+                    
+                report["project_stats"][project_name] = {
+                    "total_files": stats["total_files"],
+                    "interface_files": stats["interface_files"],
+                    "total_functions": len(stats["functions"]),
+                    "total_args": stats["total_arguments"],
+                    "borrowed_arguments": stats["borrowed_arguments"],
+                    "custom_arg_types": list(stats["custom_arg_types"]),
+                    "custom_arg_types_count": len(stats["custom_arg_types"]),
+                    "custom_return_types": list(stats["custom_return_types"]),
+                    "custom_return_types_count": len(stats["custom_return_types"]),
+                    "pointers": stats["pointers"],
+                    "percentage_functions_with_borrowed_args": percentage_functions_with_borrowed_args,
+                    "percentage_functions_custom_type": percentage_functions_custom_type,
+                    "percentage_functions_with_custom_return_type": percentage_functions_with_custom_return_type,
+                    "percentage_functions_with_mut": percentage_function_with_mut,
+                    "percentage_functions_with_lifetime": percentage_functions_with_lifetime,
+                    "percentage_functions_with_pointer_like_types": percentage_functions_with_pointer_like_types,
+                    "custom_types": {
+                        "structs": list(stats["custom_types"]["structs"]),
+                        "structs_count": len(stats["custom_types"]["structs"]),
+                        "enums": list(stats["custom_types"]["enums"]),
+                        "enums_count": len(stats["custom_types"]["enums"]),
+                        "type_aliases": list(stats["custom_types"]["type_aliases"]),
+                        "type_aliases_count": len(stats["custom_types"]["type_aliases"]),
+                        "traits": list(stats["custom_types"]["traits"]),
+                        "traits_count": len(stats["custom_types"]["traits"])
+                    },
+                    "traits_implemented": stats["traits_implemented"]
+                }
+            
         return report
     
     def save_report(self, output_path):
