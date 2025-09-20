@@ -320,12 +320,13 @@ def cargo_test(proj_path):
     fails = std_out.count('... FAILED')
     return oks, fails
 
-def performance_stats(dir):
+def performance_stats(output_dir):
     overall_stats = {
         "All tests pass": 0,
-        "Compile":0
+        "Compile":0,
     }
-    lines = csv.reader(open(dir / 'test_report.csv', 'r'))
+    
+    lines = csv.reader(open(output_dir / 'test_report.csv', 'r'))
     proj_dict = {}
     lines = list(lines)
     for line in tqdm(lines[1:]):
@@ -333,7 +334,7 @@ def performance_stats(dir):
         err_code = line[1]
         if proj_name in proj_dict:
             continue
-        oks, fails = cargo_test(dir/proj_name)
+        oks, fails = cargo_test(output_dir/proj_name)
         line.append(oks)
         line.append(fails)
             
@@ -344,14 +345,14 @@ def performance_stats(dir):
         
         if fails == 0 and oks > 0:
             overall_stats["All tests pass"] += 1
-        elif oks>=0 and fails>=0:
+        elif (oks>0 or fails>0):
             overall_stats["Compile"] += 1
         else:
             pass
-    with open(Path(dir)/ 'test_report_p_f.csv', 'w') as f:
+    with open(Path(output_dir)/ 'test_report_p_f.csv', 'w') as f:
         writer = csv.writer(f)
         writer.writerows(lines)
-    with open(Path(dir)/ 'model_perf.csv', 'w') as f:
+    with open(Path(output_dir)/ 'model_perf.csv', 'w') as f:
         writer = csv.writer(f)
         visited = set()
         writer.writerow(['Project', 'OKs', 'Fails'])
