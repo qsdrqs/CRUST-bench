@@ -1,0 +1,15 @@
+libpgn.a
+libpgn.so
+libpgn.dll
+*.o
+
+# ignore everything except the tests/ source files
+tests/*
+!tests/*.c
+
+examples/*
+!examples/*.c
+!examples/*.pgn
+
+bin/pgn
+bin/pgn.exe

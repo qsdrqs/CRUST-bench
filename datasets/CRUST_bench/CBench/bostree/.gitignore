@@ -1,0 +1,7 @@
+*.o
+*.so
+bos
+tests/*
+!tests/*.c
+!tests/*.h
+libbostree.a

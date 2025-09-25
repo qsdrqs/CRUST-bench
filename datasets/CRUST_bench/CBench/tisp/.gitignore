@@ -1,0 +1,23 @@
+# swap files
+*~
+*.swp
+*.swo
+\#*\#
+
+# compiled files
+tisp
+test
+tibs.tsp.h
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.o
+*.obj
+*.so
+*.so.*
+
+# misc
+tags
+Session.vim

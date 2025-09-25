@@ -1,0 +1,5 @@
+leftpad
+libleftpad.so
+libleftpad.a
+tests
+*.o

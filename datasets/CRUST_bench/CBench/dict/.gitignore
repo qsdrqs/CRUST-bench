@@ -1,0 +1,10 @@
+.git
+.vscode
+*.dll
+*.so
+*.exe
+*.o
+*.a
+*.bin
+arena.h
+test

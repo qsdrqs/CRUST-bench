@@ -1,0 +1,15 @@
+# Object files
+*.o
+
+# Executables
+*.exe
+*.out
+/bin/
+/build/
+
+# IDE files
+*.swp
+*~*
+*#*
+*.dev
+*.layout

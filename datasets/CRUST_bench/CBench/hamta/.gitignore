@@ -1,0 +1,7 @@
+*.out
+*.swp
+*.swo
+bin
+hamta/build
+hamta/*.so
+hamta/*.c
